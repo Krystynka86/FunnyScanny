@@ -3,22 +3,111 @@
 //  FunnyScanny
 //
 //  Created by Cristina on 2024-06-07.
-//
+// do not forget to add user camera permission in info file
 
 import SwiftUI
+import VisionKit
 
 struct ContentView: View {
+    
+    @EnvironmentObject var vm: AppViewModel
+    
+    private let textContentTypes: [(title: String, textContentType: DataScannerViewController.TextContentType?)] = [
+        ("All", .none),
+        ("URL", .URL),
+        ("Phone", .telephoneNumber),
+        ("Email", .emailAddress),
+        ("Address", .fullStreetAddress)
+    ]
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        switch vm.dataScannerAccessStatus {
+        case .scannerAvaiable:
+            mainView
+        case .cameraNotAvaiable:
+            Text("Your device doesn't have a camera")
+        case .scannerNotAvaiable:
+            Text("Your device doesn't have support for scanning barcode with this app")
+        case .cameraAccessNotGranted:
+            Text("Please provide access to the camera in settings")
+        case .notDetermined:
+            Text("Requesting camera access")
         }
-        .padding()
+    }
+    
+    private var mainView: some View {
+            DataScannerView(
+             recognizedItems: $vm.recognizedItems,
+             recognizedDataType: vm.recognizedDataType,
+             recognizesMultipleItems: vm.recognizesMultiplyItems)
+            .background { Color.gray.opacity(0.3)}
+            .ignoresSafeArea()
+            .id(vm.dataScannerViewId)
+            .sheet(isPresented: .constant(true)) {
+                bottomContainerView
+                    .background(.ultraThinMaterial)
+                    .presentationDetents([.medium, .fraction(0.25)])
+                    .presentationDragIndicator(.visible)
+                    .interactiveDismissDisabled()
+                    .onAppear {
+                        guard let windowsScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                              let controller = windowsScene.windows.first?.rootViewController?.presentedViewController else {
+                            return
+                        }
+                        controller.view.backgroundColor = .clear
+                    }
+            }
+        
+        .onChange(of: vm.scanType) { _ in vm.recognizedItems = [] }
+        .onChange(of: vm.textContentType) { _ in vm.recognizedItems = [] }
+        .onChange(of: vm.recognizesMultiplyItems) { _ in vm.recognizedItems = [] }
+    }
+    
+    private var headerView: some View {
+        VStack {
+            HStack {
+                Picker("Scan Type", selection: $vm.scanType) {
+                    Text("Barcode").tag(ScanType.barcode)
+                    Text("Text").tag(ScanType.text)
+                }.pickerStyle(.segmented)
+                
+                Toggle("Scan multiple", isOn: $vm.recognizesMultiplyItems)
+            }.padding(.top)
+            
+            if vm.scanType == .text {
+                Picker("Text content type", selection: $vm.textContentType) {
+                    ForEach(textContentTypes, id: \.self.textContentType) { option in
+                        Text(option.title).tag(option.textContentType)
+                      }
+                    }.pickerStyle(.segmented)
+                }
+                
+                Text(vm.headerText).padding(.top)
+         }
+         .padding(.horizontal)
+    }
+    
+    private var bottomContainerView: some View {
+        VStack {
+            headerView
+            ScrollView {
+                LazyVStack(alignment: .leading, spacing: 16) {
+                    ForEach(vm.recognizedItems) { item in
+                        switch item {
+                        case .barcode(let barcode):
+                            Text(barcode.payloadStringValue ?? "Unknown barcode")
+                        case .text(let text):
+                            Text(text.transcript)
+                            
+                        @unknown default:
+                            Text("Unknown")
+                        }
+                    }
+                }
+                .padding()
+            }
+        }
     }
 }
 
-#Preview {
-    ContentView()
-}
+

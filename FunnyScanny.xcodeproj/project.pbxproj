@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6BB7D2AB2C15042700B40F71 /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB7D2AA2C15042700B40F71 /* AppViewModel.swift */; };
+		6BB7D2AD2C16248000B40F71 /* DataScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB7D2AC2C16248000B40F71 /* DataScannerView.swift */; };
 		6BE3478A2C13A3BC00AF5057 /* FunnyScannyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE347892C13A3BC00AF5057 /* FunnyScannyApp.swift */; };
 		6BE3478C2C13A3BC00AF5057 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE3478B2C13A3BC00AF5057 /* ContentView.swift */; };
 		6BE3478E2C13A3BD00AF5057 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6BE3478D2C13A3BD00AF5057 /* Assets.xcassets */; };
@@ -14,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6BB7D2AA2C15042700B40F71 /* AppViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
+		6BB7D2AC2C16248000B40F71 /* DataScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataScannerView.swift; sourceTree = "<group>"; };
 		6BE347862C13A3BC00AF5057 /* FunnyScanny.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FunnyScanny.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BE347892C13A3BC00AF5057 /* FunnyScannyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FunnyScannyApp.swift; sourceTree = "<group>"; };
 		6BE3478B2C13A3BC00AF5057 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,8 +57,10 @@
 			children = (
 				6BE347892C13A3BC00AF5057 /* FunnyScannyApp.swift */,
 				6BE3478B2C13A3BC00AF5057 /* ContentView.swift */,
+				6BB7D2AC2C16248000B40F71 /* DataScannerView.swift */,
 				6BE3478D2C13A3BD00AF5057 /* Assets.xcassets */,
 				6BE3478F2C13A3BD00AF5057 /* Preview Content */,
+				6BB7D2AA2C15042700B40F71 /* AppViewModel.swift */,
 			);
 			path = FunnyScanny;
 			sourceTree = "<group>";
@@ -139,6 +145,8 @@
 			files = (
 				6BE3478C2C13A3BC00AF5057 /* ContentView.swift in Sources */,
 				6BE3478A2C13A3BC00AF5057 /* FunnyScannyApp.swift in Sources */,
+				6BB7D2AB2C15042700B40F71 /* AppViewModel.swift in Sources */,
+				6BB7D2AD2C16248000B40F71 /* DataScannerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,6 +283,7 @@
 				DEVELOPMENT_TEAM = UXC7U9N9AB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The app needs camera access to scan barcode and text";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -304,6 +313,7 @@
 				DEVELOPMENT_TEAM = UXC7U9N9AB;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "The app needs camera access to scan barcode and text";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
